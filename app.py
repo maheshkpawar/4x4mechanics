@@ -78,6 +78,12 @@ def is_admin():
     return session.get("admin_logged_in") is True
 
 # ── Public routes ─────────────────────────────────────────────
+@app.route("/logo.png")
+def serve_logo():
+    """Serve logo from root directory."""
+    from flask import send_from_directory
+    return send_from_directory(os.path.dirname(__file__), "logo.png")
+
 @app.route("/")
 def index():
     """Main public website."""
