@@ -9,7 +9,7 @@ from datetime import datetime
 import json
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=".")
 app.secret_key = "4x4mechanics_secret_2026"
 
 # ── File paths ──────────────────────────────────────────────
