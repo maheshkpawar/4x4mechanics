@@ -297,7 +297,7 @@ function addService(){
   var ic=document.getElementById("si").value.trim()||"🔧";
   var d=document.getElementById("sd").value.trim();
   var p=document.getElementById("sp").value.trim()||"Call for price";
-  if(!n||!d){toast("Name aur description zaroori hai");return;}
+  if(!n||!d){toast("Name and description are required");return;}
   api("/admin/services/add",{icon:ic,name:n,desc:d,price:p},function(r){
     if(r.success){
       var g=document.getElementById("svc-list");
@@ -306,7 +306,7 @@ function addService(){
       div.innerHTML='<div style="font-size:1.6rem;margin-bottom:7px;">'+ic+'</div><h4>'+n+'</h4><p>'+d.substring(0,60)+'...</p><div class="pr">'+p+'</div><button class="btn-r" onclick="deleteService('+r.id+', this)">Delete</button>';
       g.appendChild(div);
       ["sn","si","sd","sp"].forEach(function(id){document.getElementById(id).value="";});
-      toast("Service add ho gayi!");
+      toast("Service added!");
     }
   });
 }
@@ -323,7 +323,7 @@ function addReview(){
   var s=parseInt(document.getElementById("rs").value);
   var t=document.getElementById("rt").value.trim();
   var l=document.getElementById("rl").value.trim()||"Nashik";
-  if(!n||!t){toast("Name aur review zaroori hai");return;}
+  if(!n||!t){toast("Name and review are required");return;}
   api("/admin/reviews/add",{name:n,stars:s,text:t,loc:l},function(r){
     if(r.success){
       var stars="";for(var i=0;i<s;i++){stars+="⭐";}
@@ -333,7 +333,7 @@ function addReview(){
       div.innerHTML='<div><h5>'+n+" "+stars+'</h5><p>"'+t.substring(0,80)+'..."</p><p style="color:var(--gold);font-size:.73rem;margin-top:3px;">'+l+'</p></div><button class="btn-r" onclick="deleteReview('+r.id+', this)">✕</button>';
       list.insertBefore(div,list.firstChild);
       ["rn","rt","rl"].forEach(function(id){document.getElementById(id).value="";});
-      toast("Review add ho gayi!");
+      toast("Review added!");
     }
   });
 }
@@ -359,9 +359,9 @@ function saveSettings(){
 function changePass(){
   var np=document.getElementById("np").value;
   var cp=document.getElementById("cp").value;
-  if(!np){toast("Password enter karo");return;}
-  if(np!==cp){toast("Passwords match nahi ho rahe");return;}
-  if(np.length<6){toast("Min 6 characters chahiye");return;}
+  if(!np){toast("Enter password");return;}
+  if(np!==cp){toast("Passwords do not match");return;}
+  if(np.length<6){toast("Minimum 6 characters required");return;}
   api("/admin/settings/save",{new_password:np},function(r){
     if(r.success){document.getElementById("np").value="";document.getElementById("cp").value="";toast("Password changed!");}
   });
