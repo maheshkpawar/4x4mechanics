@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ settings.business_name }} - Trusted Car Service Nashik</title>
+<meta name="description" content="4x4 Mechanics Garage - Professional 4-wheeler car repair, engine service, AC repair, oil change, wheel alignment in Amrutdham, Nashik. Call 9403666931.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div id="login-modal">
+  <div class="login-box">
+    <img id="login-logo" src="/logo.png" alt="Logo">
+    <h2>Admin Login</h2>
+    <div class="sub">4x4 Mechanics Garage - Admin Panel</div>
+    <div class="lerr" id="lerr">Wrong username or password</div>
+    <input type="text" id="lu" placeholder="Username" autocomplete="off">
+    <input type="password" id="lp" placeholder="Password">
+    <button class="btn-login" onclick="doLogin()">LOGIN -&gt;</button>
+    <button class="back-link" onclick="closeLogin()">&lt;- Back to website</button>
+    <div class="default-hint">Default: admin / 4x4admin@2026</div>
+  </div>
+</div>
+
+<div id="admin-panel">
+  <div class="a-topbar">
+    <div class="a-topbar-l">
+      <img id="a-top-logo" src="/logo.png" alt="Logo">
+      <div><h1>4x4 ADMIN PANEL</h1><span id="a-date"></span></div>
+    </div>
+    <button class="btn-logout" onclick="logout()">Logout -&gt;</button>
+  </div>
+  <div class="a-tabs">
+    <button class="atab on" data-tab="dashboard">Dashboard</button>
+    <button class="atab" data-tab="appearance">Logo &amp; Name</button>
+    <button class="atab" data-tab="hero">Hero Section</button>
+    <button class="atab" data-tab="services">Services</button>
+    <button class="atab" data-tab="reviews">Reviews</button>
+    <button class="atab" data-tab="bookings">Bookings</button>
+    <button class="atab" data-tab="settings">Settings</button>
+  </div>
+  <div class="a-body">
+
+    <div class="asec on" id="tab-dashboard">
+      <div class="a-stats">
+        <div class="astat"><h4>Total Bookings</h4><div class="num" id="st-total">0</div></div>
+        <div class="astat"><h4>Pending</h4><div class="num" id="st-pend">0</div></div>
+        <div class="astat"><h4>Confirmed</h4><div class="num" id="st-conf">0</div></div>
+        <div class="astat"><h4>Completed</h4><div class="num" id="st-done">0</div></div>
+      </div>
+      <div class="acard"><h3>Recent Bookings</h3><div class="blist" id="dash-bks"><p style="color:var(--gray);font-size:.86rem;">No bookings yet.</p></div></div>
+    </div>
+
+    <div class="asec" id="tab-appearance">
+      <div class="acard">
+        <h3>Business Logo Upload</h3>
+        <p style="color:var(--gray);font-size:.83rem;margin-bottom:14px;">Logo upload karo, sab jagah update ho jayega.</p>
+        <div class="img-up">
+          <input type="file" id="logo-file" accept="image/*">
+          <img id="logo-prev" src="/logo.png" alt="Logo">
+          <p>Click karke logo upload karo</p>
+          <div class="hint">JPG, PNG, WebP supported</div>
+        </div>
+        <button class="btn-g" id="save-logo-btn">Save Logo</button>
+      </div>
+      <div class="acard">
+        <h3>Business Name &amp; Tagline</h3>
+        <div class="af">
+          <label>Business Name</label>
+          <input type="text" id="a-biz" placeholder="4x4 Mechanics Garage">
+          <label>Tagline</label>
+          <input type="text" id="a-tag" placeholder="Nashik ka Trusted Garage">
+          <button class="btn-g" id="save-app-btn">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="asec" id="tab-hero">
+      <div class="acard">
+        <h3>Hero Section - Live Preview</h3>
+        <div class="h-prev" id="hero-prev">
+          <div class="pt">Trusted <span>4-Wheeler</span> Service</div>
+          <div class="ps">Professional car repair &amp; maintenance in Nashik</div>
+        </div>
+        <div class="af">
+          <label>Line 1</label><input type="text" id="h-l1" placeholder="Trusted">
+          <label>Line 2 (gold)</label><input type="text" id="h-l2" placeholder="4-Wheeler">
+          <label>Line 3</label><input type="text" id="h-l3" placeholder="Service">
+          <label>Subheading</label><textarea id="h-sub" rows="2"></textarea>
+          <label>Badge Text</label><input type="text" id="h-badge" placeholder="Open Now">
+          <button class="btn-g" id="save-hero-btn">Save Hero Section</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="asec" id="tab-services">
+      <div class="acard">
+        <h3>Add New Service</h3>
+        <div class="af">
+          <div class="fr2">
+            <div><label>Service Name</label><input type="text" id="sn" placeholder="e.g. Tyre Rotation"></div>
+            <div><label>Icon (emoji)</label><input type="text" id="si" placeholder="emoji" maxlength="4"></div>
+          </div>
+          <label>Description</label><textarea id="sd"></textarea>
+          <label>Includes (comma separated)</label><input type="text" id="sb" placeholder="Oil check, Filter change">
+          <label>Price</label><input type="text" id="sp" placeholder="Starting Rs 500">
+          <button class="btn-g" id="add-svc-btn">Add Service</button>
+        </div>
+      </div>
+      <div class="acard"><h3>Current Services <span id="svc-ct" style="font-size:.78rem;color:var(--gray);font-weight:400;"></span></h3><div class="svc-ag" id="a-svc-list"></div></div>
+    </div>
+
+    <div class="asec" id="tab-reviews">
+      <div class="acard">
+        <h3>Add Customer Review</h3>
+        <div class="af">
+          <div class="fr2">
+            <div><label>Customer Name</label><input type="text" id="rn" placeholder="Rahul Patil"></div>
+            <div><label>Rating</label>
+              <select id="rs">
+                <option value="5">5 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="3">3 Stars</option>
+              </select>
+            </div>
+          </div>
+          <label>Review Text</label><textarea id="rt"></textarea>
+          <label>Location / Vehicle</label><input type="text" id="rl" placeholder="Nashik, Honda City owner">
+          <button class="btn-g" id="add-rev-btn">Add Review</button>
+        </div>
+      </div>
+      <div class="acard"><h3>All Reviews <span id="rev-ct" style="font-size:.78rem;color:var(--gray);font-weight:400;"></span></h3><div class="rlist" id="a-rev-list"></div></div>
+    </div>
+
+    <div class="asec" id="tab-bookings">
+      <div class="acard">
+        <h3>All Bookings <span id="bk-ct" style="font-size:.78rem;color:var(--gray);font-weight:400;"></span></h3>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+          <button class="btn-g" style="padding:8px 16px;font-size:.8rem;" data-filter="all">All</button>
+          <button class="btn-o" data-filter="pending">Pending</button>
+          <button class="btn-o" data-filter="confirmed">Confirmed</button>
+          <button class="btn-o" data-filter="done">Completed</button>
+        </div>
+        <div class="blist" id="all-bks-list"><p style="color:var(--gray);font-size:.86rem;">No bookings yet.</p></div>
+      </div>
+    </div>
+
+    <div class="asec" id="tab-settings">
+      <div class="acard">
+        <h3>Business Information</h3>
+        <div class="af">
+          <div class="fr2">
+            <div><label>Owner Name</label><input type="text" id="s-owner" placeholder="Shantanu Pawar"></div>
+            <div><label>Phone / WhatsApp</label><input type="text" id="s-phone" placeholder="9403666931"></div>
+          </div>
+          <label>Address</label><input type="text" id="s-addr" placeholder="Amrutdham, Nashik">
+          <label>Working Hours</label><input type="text" id="s-hrs" placeholder="Mon-Sat 9AM-7PM">
+          <button class="btn-g" id="save-set-btn">Save Settings</button>
+        </div>
+      </div>
+      <div class="acard">
+        <h3>Change Admin Password</h3>
+        <div class="af">
+          <label>New Password</label><input type="password" id="np" placeholder="Min 6 characters">
+          <label>Confirm Password</label><input type="password" id="cp" placeholder="Repeat password">
+          <button class="btn-g" id="change-pass-btn">Update Password</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="public-site">
+
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <img id="pub-logo-nav" src="/logo.png" alt="Logo">
+    <div class="nav-logo-t">
+      <div class="nav-logo-name" id="pub-biz-name">4x4 <span>Mechanics</span> Garage</div>
+      <div class="nav-logo-sub" id="pub-tagline">Nashik ka Trusted Garage</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#process">How It Works</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Book Now</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></button>
+</nav>
+<div class="mob-menu" id="mob-menu">
+  <a href="#about">About Us</a>
+  <a href="#services">Services</a>
+  <a href="#why">Why Choose Us</a>
+  <a href="#process">How It Works</a>
+  <a href="#testimonials">Customer Reviews</a>
+  <a href="#contact">Contact Us</a>
+  <a href="#contact" class="mob-cta">Book Service</a>
+</div>
+
+<div class="promo-bar">
+  <span>Special Offer: Free AC Check with any Full Service</span>
+  <span class="divider">|</span>
+  <span>Call Now: <a id="promo-phone" href="tel:9403666931">9403666931</a></span>
+  <span class="divider">|</span>
+  <span>Amrutdham, Nashik</span>
+</div>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge" id="pub-badge">Open Now - Amrutdham, Nashik</div>
+      <h1 class="hero-title" id="pub-hero-title">Trusted<br><span class="gold">4-Wheeler</span><br>Service</h1>
+      <p class="hero-sub" id="pub-hero-sub">Professional car repair and maintenance by expert mechanics.</p>
+      <div class="hero-btns">
+        <a href="tel:9403666931" class="btn-p" id="pub-call-btn">Call Now</a>
+        <a href="#contact" class="btn-s">Book Service</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hst"><div class="n">500+</div><div class="l">Cars Serviced</div></div>
+        <div class="hst"><div class="n">100%</div><div class="l">Satisfaction</div></div>
+        <div class="hst"><div class="n">10+</div><div class="l">Services</div></div>
+        <div class="hst"><div class="n">EST</div><div class="l">2026</div></div>
+      </div>
+    </div>
+    <div class="hero-logo-side"><img class="hero-logo-img" id="pub-logo-hero" src="/logo.png" alt="Logo"></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-grid">
+    <div class="about-vis">
+      <img class="about-logo-big" id="pub-logo-about" src="/logo.png" alt="Logo">
+      <div class="about-badge-box"><div class="yr">EST</div><div class="yt">2026</div></div>
+    </div>
+    <div>
+      <div class="eyebrow">About Us</div>
+      <h2 class="sec-title">Nashik Ki <span class="gold">Sabse Bharosemand</span> Garage</h2>
+      <p class="sec-desc" style="margin-bottom:24px;">At <strong id="about-biz-nm">4x4 Mechanics Garage</strong>, we believe your car deserves expert care. Located in Amrutdham, Nashik, we are equipped with modern diagnostic tools and experienced mechanics.</p>
+      <div class="about-features">
+        <div class="about-feat"><div class="afi">i</div><div><h4>Free Inspection</h4><p>Har service se pehle free multi-point inspection</p></div></div>
+        <div class="about-feat"><div class="afi">P</div><div><h4>Genuine Parts Only</h4><p>100% authentic spare parts, no duplicates ever</p></div></div>
+        <div class="about-feat"><div class="afi">$</div><div><h4>Transparent Billing</h4><p>No hidden charges - pehle quote, phir kaam</p></div></div>
+        <div class="about-feat"><div class="afi">W</div><div><h4>Live Updates</h4><p>WhatsApp pe live updates milenge apni car ki</p></div></div>
+      </div>
+      <div class="owner-card">
+        <div class="owner-av" id="owner-av">SP</div>
+        <div class="owner-info"><h4 id="owner-nm">Shantanu Pawar</h4><p>Founder &amp; Head Mechanic</p><small>Expert in all 4-wheeler services</small></div>
+      </div>
+      <div class="apoints">
+        <div class="apoint">Transparent pricing - koi hidden charge nahi</div>
+        <div class="apoint">Genuine spare parts always used</div>
+        <div class="apoint">Quick turnaround - zyada tar same day delivery</div>
+        <div class="apoint">Pickup &amp; drop service available on call</div>
+        <div class="apoint">All major car brands serviced</div>
+        <div class="apoint">Free car wash with every full service</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="svc-header">
+    <div>
+      <div class="eyebrow">What We Do</div>
+      <h2 class="sec-title">Hamare <span class="gold">Services</span></h2>
+      <p class="sec-desc">Complete 4-wheeler care under one roof. Click any service to know more.</p>
+    </div>
+  </div>
+  <div class="svc-grid" id="pub-svc-grid"></div>
+</section>
+
+<section id="why">
+  <div class="why-intro">
+    <div>
+      <div class="eyebrow">Why Choose Us</div>
+      <h2 class="sec-title">The <span class="gold">4x4 Difference</span></h2>
+    </div>
+    <p class="sec-desc">We go beyond just fixing cars - we build long-term relationships built on trust.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-icon">A</div><h3>Expert Mechanics</h3><p>Trained and experienced technicians across all major car brands.</p></div>
+    <div class="why-card"><div class="why-icon">B</div><h3>Genuine Parts Only</h3><p>We use only 100% authentic spare parts, no compromise.</p></div>
+    <div class="why-card"><div class="why-icon">C</div><h3>Honest Pricing</h3><p>Fair, transparent rates with itemized billing.</p></div>
+    <div class="why-card"><div class="why-icon">D</div><h3>Quick Turnaround</h3><p>Most services completed within the same day.</p></div>
+    <div class="why-card"><div class="why-icon">E</div><h3>100% Satisfaction</h3><p>We don't hand over your car until you're satisfied.</p></div>
+    <div class="why-card"><div class="why-icon">F</div><h3>Free Pickup &amp; Drop</h3><p>We pick up your car and return it once work is done.</p></div>
+    <div class="why-card"><div class="why-icon">G</div><h3>WhatsApp Updates</h3><p>Real-time updates on your car's service status.</p></div>
+    <div class="why-card"><div class="why-icon">H</div><h3>Service Warranty</h3><p>All major services come with a satisfaction warranty.</p></div>
+  </div>
+</section>
+
+<section id="process">
+  <div style="text-align:center;max-width:600px;margin:0 auto;">
+    <div class="eyebrow" style="justify-content:center;">Simple Process</div>
+    <h2 class="sec-title" style="text-align:center;">How It <span class="gold">Works</span></h2>
+    <p class="sec-desc" style="text-align:center;margin:0 auto;">Car service book karna bilkul simple hai - sirf 4 steps</p>
+  </div>
+  <div class="process-steps">
+    <div class="p-step"><div class="p-num">1</div><h3>Book Appointment</h3><p>Call karo ya WhatsApp pe message karo.</p></div>
+    <div class="p-step"><div class="p-num">2</div><h3>Car Inspection</h3><p>Free multi-point inspection aur issue diagnosis.</p></div>
+    <div class="p-step"><div class="p-num">3</div><h3>Approve Quote</h3><p>Transparent quote approve karo, koi surprise nahi.</p></div>
+    <div class="p-step"><div class="p-num">4</div><h3>Drive Happy</h3><p>Car ready, pickup karo ya drop le lao.</p></div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="testi-header">
+    <div class="eyebrow">Customer Reviews</div>
+    <h2 class="sec-title">Hamare <span class="gold">Khush Customers</span></h2>
+    <p class="sec-desc">500+ satisfied customers - yeh hain unke actual experiences</p>
+  </div>
+  <div class="testi-grid" id="pub-testi-grid"></div>
+</section>
+
+<section id="contact">
+  <div class="eyebrow">Get In Touch</div>
+  <h2 class="sec-title">Service <span class="gold">Book Karo</span></h2>
+  <p class="sec-desc" style="margin-bottom:0;">Form fill karo - WhatsApp pe instant confirmation milega</p>
+  <div class="contact-grid">
+    <div>
+      <div class="cinfo-items">
+        <div class="citem"><div class="cicon">A</div><div><h4>Address</h4><p id="pub-addr">Amrutdham, Nashik, Maharashtra, India</p></div></div>
+        <div class="citem"><div class="cicon">P</div><div><h4>Phone / WhatsApp</h4><a id="pub-phone" href="tel:9403666931">+91 9403666931</a></div></div>
+        <div class="citem"><div class="cicon">T</div><div><h4>Working Hours</h4><p id="pub-hrs">Mon-Sat: 9AM-7PM<br>Sunday: 10AM-4PM</p></div></div>
+        <div class="citem"><div class="cicon">O</div><div><h4>Owner</h4><p id="pub-owner">Shantanu Pawar</p></div></div>
+        <div class="citem"><div class="cicon">W</div><div><h4>WhatsApp</h4><a id="pub-wa-link" href="#" target="_blank">Chat on WhatsApp</a></div></div>
+      </div>
+      <div class="map-box">
+        <div style="font-weight:600;color:var(--white);">4x4 Mechanics Garage</div>
+        <div>Amrutdham, Nashik, Maharashtra</div>
+        <a href="https://maps.google.com/?q=Amrutdham+Nashik+Maharashtra" target="_blank">Open in Google Maps</a>
+      </div>
+    </div>
+    <div>
+      <div class="cform">
+        <div class="fr2">
+          <div class="fg"><label>Aapka Naam *</label><input type="text" id="f-name" placeholder="Rahul Patil"></div>
+          <div class="fg"><label>Phone Number *</label><input type="tel" id="f-phone" placeholder="9XXXXXXXXX"></div>
+        </div>
+        <div class="fr2">
+          <div class="fg"><label>Car Model</label><input type="text" id="f-car" placeholder="Honda City 2020"></div>
+          <div class="fg"><label>Service Chahiye</label>
+            <select id="f-svc">
+              <option value="">Select karo...</option>
+              <option>General Car Service</option>
+              <option>Engine Diagnostics</option>
+              <option>Oil Change</option>
+              <option>Brake Repair</option>
+              <option>Suspension Repair</option>
+              <option>AC Service</option>
+              <option>Battery Replacement</option>
+              <option>Wheel Alignment</option>
+              <option>Car Washing</option>
+              <option>Pickup &amp; Drop</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="fg"><label>Problem / Message</label><textarea id="f-issue" placeholder="Car mein kya problem hai..."></textarea></div>
+        <button class="btn-p" style="width:100%;justify-content:center;font-size:1rem;" id="submit-booking-btn">WhatsApp pe Book Karo</button>
+        <p class="form-note">Submit karte hi WhatsApp mein pre-filled message khulega</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="fb-logo"><img id="pub-logo-footer" src="/logo.png" alt="Logo"><h3 id="pub-footer-nm">4x4 Mechanics Garage</h3></div>
+      <p class="fb-desc">Nashik ka sabse trusted automobile care center. Expert mechanics, genuine parts, honest service.</p>
+      <div class="fsocial">
+        <a href="#" class="soc">f</a>
+        <a href="#" class="soc" id="footer-wa-btn">w</a>
+        <a href="#" class="soc">i</a>
+        <a href="tel:9403666931" class="soc" id="footer-call-btn">c</a>
+      </div>
+    </div>
+    <div class="fcol">
+      <h4>Our Services</h4>
+      <ul>
+        <li><a href="#services">General Car Service</a></li>
+        <li><a href="#services">Engine Diagnostics</a></li>
+        <li><a href="#services">AC Service</a></li>
+        <li><a href="#services">Brake Repair</a></li>
+        <li><a href="#services">Wheel Alignment</a></li>
+        <li><a href="#services">Car Washing</a></li>
+        <li><a href="#services">Battery Replacement</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4>Contact Us</h4>
+      <ul>
+        <li><a id="f-phone-link" href="tel:9403666931">9403666931</a></li>
+        <li><a id="f-wa-link" href="#">WhatsApp Chat</a></li>
+        <li><a href="https://maps.google.com/?q=Amrutdham+Nashik" target="_blank">Amrutdham, Nashik</a></li>
+        <li><a href="#contact">Book Appointment</a></li>
+        <li><a href="#about">About Shantanu Pawar</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-btm">
+    <p>(c) 2026 <span id="footer-biz-nm">4x4 Mechanics Garage</span> - Shantanu Pawar. All rights reserved.</p>
+    <button class="admin-btn" id="admin-trigger-btn" title="Admin Login">settings</button>
+  </div>
+</footer>
+
+<div class="floats">
+  <a id="f-call" href="tel:9403666931" class="fbtn fbtn-call" title="Call Now">Call</a>
+  <a id="f-wa" href="#" class="fbtn fbtn-wa" target="_blank" title="WhatsApp">WA</a>
+</div>
+
+<div id="svc-modal">
+  <div class="modal-box">
+    <button class="mclose" id="mod-close-btn">X</button>
+    <div class="micon" id="mod-icon"></div>
+    <h3 id="mod-title"></h3>
+    <p class="mdesc" id="mod-desc"></p>
+    <ul class="mdetail" id="mod-bullets"></ul>
+    <div class="mprice" id="mod-price"></div>
+    <div class="mactions">
+      <a href="#contact" class="btn-p" id="mod-book-btn">Book This Service</a>
+      <a href="#" class="btn-s" id="mod-wa" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script src="/scripts.js"></script>
+</body>
+</html>
